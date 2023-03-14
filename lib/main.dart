@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_complete_guide/answer.dart';
+import 'package:flutter_complete_guide/quiz.dart';
+import 'package:flutter_complete_guide/result.dart';
 
 import './question.dart';
 
@@ -16,18 +18,33 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
 
-  var questions = [
+  final _questions = const [
     {
       'questionText': 'what\' your favorite color?',
-      'answer': ['Black', 'Red', 'Green', 'White'],
+      'answer': [
+        {'text': 'Black', 'score': 10},
+        {'text': 'Red', 'score': 7},
+        {'text': 'Green', 'score': 4},
+        {'text': 'White', 'score': 10},
+      ],
     },
     {
       'questionText': 'what\' your favorite Animal?',
-      'answer': ['Rabbit', 'Snake', 'Elephant', 'White'],
+      'answer': [
+        {'text': 'Rabbit', 'score': 6},
+        {'text': 'Snake', 'score': 3},
+        {'text': 'Elephant', 'score': 8},
+        {'text': 'White', 'score': 3},
+      ],
     },
     {
       'questionText': 'what\' your favorite Instructor?',
-      'answer': ['Max', 'Max', 'Max', 'Max'],
+      'answer': [
+        {'text': 'Max', 'score': 6},
+        {'text': 'Max', 'score': 3},
+        {'text': 'Max', 'score': 8},
+        {'text': 'Max', 'score': 4},
+      ],
     },
   ];
 
@@ -35,6 +52,13 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _questionIndex += 1;
     });
+    print(_questionIndex);
+
+    if (_questionIndex < _questions.length) {
+      print("we more hve question ");
+    } else {
+      print("No more question");
+    }
     // print("Aswer chosen! $_questionIndex");
   }
 
@@ -50,23 +74,12 @@ class _MyAppState extends State<MyApp> {
           appBar: AppBar(
             title: Text("My First App"),
           ),
-          body: _questionIndex < questions.length
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Question(
-                      questions[_questionIndex]["questionText"].toString(),
-                    ),
-                    ...(questions[_questionIndex]['answer'] as List<String>)
-                        .map((question) {
-                      return Answer(
-                        selectHandler: answerQuestion,
-                        answerText: question,
-                      );
-                    }).toList(),
-                  ],
-                )
-              : Center(child: Text("hello"))),
+          body: _questionIndex < _questions.length
+              ? Quiz(
+                  questions: _questions,
+                  answerQuestion: answerQuestion,
+                  questionIndex: _questionIndex)
+              : Center(child: Result())),
     );
   }
 }
