@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_complete_guide/answer.dart';
 
 import './question.dart';
-
-// void main() {
-//   runApp(MyApp());
-// }f
 
 void main() => runApp(MyApp());
 
@@ -18,46 +16,55 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
 
+  var questions = [
+    {
+      'questionText': 'what\' your favorite color?',
+      'answer': ['Black', 'Red', 'Green', 'White'],
+    },
+    {
+      'questionText': 'what\' your favorite Animal?',
+      'answer': ['Rabbit', 'Snake', 'Elephant', 'White'],
+    },
+    {
+      'questionText': 'what\' your favorite Instructor?',
+      'answer': ['Max', 'Max', 'Max', 'Max'],
+    },
+  ];
+
   void answerQuestion() {
     setState(() {
       _questionIndex += 1;
     });
-    print("Aswer chosen! $_questionIndex");
+    // print("Aswer chosen! $_questionIndex");
   }
 
   @override
   Widget build(BuildContext context) {
-    var question = [
-      'what\' your favorite color?',
-      'what\' your favorite animal?',
-    ];
+    // var question = [
+    //   'what\' your favorite color?',
+    //   'what\' your favorite animal?',
+    // ];
 
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text("My First App"),
         ),
-        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Question(question[_questionIndex]),
-          ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-              Colors.blue,
-            )),
-            child: Text("answer 1"),
-            onPressed: answerQuestion,
-          ),
-          ElevatedButton(
-            child: Text("answer 2"),
-            onPressed: () => print("answer 2 chosen!"),
-          ),
-          ElevatedButton(
-            child: Text("answer 3"),
-            onPressed: () {
-              print("answer 3 chosen!");
-            },
-          ),
-        ]),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Question(
+              questions[_questionIndex]["questionText"].toString(),
+            ),
+            ...(questions[_questionIndex]['answer'] as List<String>)
+                .map((question) {
+              return Answer(
+                selectHandler: answerQuestion,
+                answerText: question,
+              );
+            }).toList(),
+          ],
+        ),
       ),
     );
   }

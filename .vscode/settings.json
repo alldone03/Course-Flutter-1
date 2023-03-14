@@ -1,0 +1,4 @@
+{
+    "dart.sdkPath": "/home/alldone/development/flutter/bin/cache/dart-sdk",
+    "cmake.sourceDirectory": "${workspaceFolder}/windows"
+}
