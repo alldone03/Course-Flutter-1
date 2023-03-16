@@ -43,8 +43,20 @@ double addNumber(double num1, double num2) {
 }
 
 void main() {
-  var p1 = Person(inputName: "aldan", age: 10);
-  var p2 = Person(inputName: "uldune", age: 20);
+  // var p1 = Person(inputName: "aldan", age: 10);
+  // var p2 = Person(inputName: "uldune", age: 20);
 
-  print("${p1.name}, ${p1.age}");
+  // print("${p1.name}, ${p1.age}");
+
+  for (int data = 1; data <= 15; data++) {
+    if (data % 3 == 0 && data % 5 == 0) {
+      print("FizzBuzz");
+    } else if (data % 3 == 0) {
+      print("Fizz");
+    } else if (data % 5 == 0) {
+      print("Buzz");
+    } else {
+      print("${data}");
+    }
+  }
 }

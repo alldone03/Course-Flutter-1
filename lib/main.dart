@@ -16,8 +16,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var _questionIndex = 0;
-
   final _questions = const [
     {
       'questionText': 'what\' your favorite color?',
@@ -25,50 +23,52 @@ class _MyAppState extends State<MyApp> {
         {'text': 'Black', 'score': 10},
         {'text': 'Red', 'score': 7},
         {'text': 'Green', 'score': 4},
-        {'text': 'White', 'score': 10},
+        {'text': 'White', 'score': 1},
       ],
     },
     {
       'questionText': 'what\' your favorite Animal?',
       'answer': [
         {'text': 'Rabbit', 'score': 6},
-        {'text': 'Snake', 'score': 3},
+        {'text': 'Snake', 'score': 2},
         {'text': 'Elephant', 'score': 8},
-        {'text': 'White', 'score': 3},
+        {'text': 'White', 'score': 1},
       ],
     },
     {
       'questionText': 'what\' your favorite Instructor?',
       'answer': [
-        {'text': 'Max', 'score': 6},
-        {'text': 'Max', 'score': 3},
-        {'text': 'Max', 'score': 8},
-        {'text': 'Max', 'score': 4},
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
       ],
     },
   ];
+  var _questionIndex = 0;
+  var _resultScore = 0;
 
-  void answerQuestion() {
+  void _resetQuiz() {
+    _questionIndex = 0;
+    _resultScore = 0;
+  }
+
+  void answerQuestion(int score) {
+    _resultScore += score;
     setState(() {
       _questionIndex += 1;
     });
     print(_questionIndex);
 
     if (_questionIndex < _questions.length) {
-      print("we more hve question ");
+      print("we more hve question ${_resultScore}");
     } else {
       print("No more question");
     }
-    // print("Aswer chosen! $_questionIndex");
   }
 
   @override
   Widget build(BuildContext context) {
-    // var question = [
-    //   'what\' your favorite color?',
-    //   'what\' your favorite animal?',
-    // ];
-
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
@@ -79,7 +79,10 @@ class _MyAppState extends State<MyApp> {
                   questions: _questions,
                   answerQuestion: answerQuestion,
                   questionIndex: _questionIndex)
-              : Center(child: Result())),
+              : Result(
+                  data: _resultScore,
+                  resetHandler: _resetQuiz,
+                )),
     );
   }
 }
